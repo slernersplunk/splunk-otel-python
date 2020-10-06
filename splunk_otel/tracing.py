@@ -10,13 +10,17 @@ from pkg_resources import iter_entry_points
 
 from splunk_otel.exporter.zipkin import ZipkinSpanExporter
 
+from splunk_otel.logging import enable_trace_correlation
+
+
 logger = getLogger(__file__)
 
 DEFAULT_SERVICE_NAME = "unnamed-python-service"
 DEFAULT_ENDPOINT = "http://localhost:9080/v1/trace"
 
 
-def start_tracing(url=None, service_name=None):
+def start_tracing(url=None, service_name=None, enable_log_correlation=True):
+    enable_trace_correlation()
     init_tracer(url, service_name)
     auto_instrument()
 
